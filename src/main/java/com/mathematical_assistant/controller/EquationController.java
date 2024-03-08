@@ -10,7 +10,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.NoSuchElementException;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/equations")
@@ -25,9 +27,38 @@ public class EquationController {
         this.modelMapper = modelMapper;
     }
 
+    @GetMapping
+    public List<EquationDTO> getAll() {
+        return equationService.getAll().stream().map(this::convertToEquationDTO).collect(Collectors.toList());
+    }
+
     @GetMapping("/{id}")
     public EquationDTO getOne(@PathVariable int id) {
         return convertToEquationDTO(equationService.getOne(id));
+    }
+
+    @PostMapping
+    public ResponseEntity<HttpStatus> create(@RequestBody EquationDTO equationDTO) {
+
+        Equation equation = convertToEquation(equationDTO);
+        equationService.create(equation);
+
+        return ResponseEntity.ok(HttpStatus.OK);
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<HttpStatus> update(@PathVariable int id, @RequestBody EquationDTO equationDTO) {
+
+        Equation equation = convertToEquation(equationDTO);
+        equationService.update(id, equation);
+
+        return ResponseEntity.ok(HttpStatus.OK);
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<HttpStatus> delete(@PathVariable int id) {
+        equationService.delete(id);
+        return ResponseEntity.ok(HttpStatus.OK);
     }
 
     @ExceptionHandler
