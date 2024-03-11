@@ -1,4 +1,4 @@
-package com.mathematical_assistant.services;
+package com.mathematical_assistant.util.math_polynomial;
 
 
 import lombok.Getter;
@@ -8,36 +8,33 @@ import java.util.Stack;
 
 @Getter
 @Setter
-public class PolynomialValueCalculate {
-
-    private double x;
+public class PolynomialCalculator {
     private String polynomial;
 
-    public PolynomialValueCalculate(double x, String polynomial) {
-        this.x = x;
+    public PolynomialCalculator(String polynomial) {
         this.polynomial = polynomial;
     }
 
-    public double calculate() {
-        String transformed = powerTransform();
-        transformed = replaceX(transformed);
-
-        return calculate(convertToReversePolish(transformed));
+    public double calculateValue(double x) {
+        String converted = convertToReversePolish(powerTransform());
+        String toCalculate = replaceXByValue(converted, x);
+        return calculateByReversePolish(toCalculate);
     }
 
     private String powerTransform() {
+        removeSpaceFromStartAndEnd();
         StringBuilder transformed = new StringBuilder();
 
         int numStartIndex = 0;
         for(int i = 0; i < polynomial.length(); i++) {
             if(polynomial.charAt(i) == '^') {
-                String num = polynomial.substring(numStartIndex + 1, i);
+                String num = polynomial.substring(numStartIndex, i);
                 int power = Character.getNumericValue(polynomial.charAt(++i));
 
                 transformed.append((" * " + num).repeat(power - 1));
             } else {
                 if(polynomial.charAt(i) == ' ' || polynomial.charAt(i) == '(')
-                    numStartIndex = i;
+                    numStartIndex = i + 1;
                 transformed.append(polynomial.charAt(i));
             }
         }
@@ -45,7 +42,19 @@ public class PolynomialValueCalculate {
         return transformed.toString();
     }
 
-    private String replaceX(String polynomial) {
+    private void removeSpaceFromStartAndEnd() {
+        int spaceCount = 0;
+        for(int i = polynomial.length() - 1; i >= 0; i--) {
+            if(polynomial.charAt(i) == ' ')
+                spaceCount++;
+            else
+                break;
+        }
+        polynomial = polynomial.substring(0, polynomial.length() - spaceCount);
+        polynomial = polynomial.trim();
+    }
+
+    private String replaceXByValue(String polynomial, double x) {
         StringBuilder replaced = new StringBuilder();
 
         for(int i = 0; i < polynomial.length(); i++) {
@@ -130,7 +139,7 @@ public class PolynomialValueCalculate {
         return c >= '0' && c <= '9' || c == '.' || c == 'x';
     }
 
-    private double calculate(String s) {
+    private double calculateByReversePolish(String s) {
         Stack<Double> stack = new Stack<>();
         String[] tokens = s.split(" ");
 

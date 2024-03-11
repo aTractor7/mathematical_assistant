@@ -1,4 +1,4 @@
-package com.mathematical_assistant.util;
+package com.mathematical_assistant.util.error;
 
 import org.springframework.validation.FieldError;
 

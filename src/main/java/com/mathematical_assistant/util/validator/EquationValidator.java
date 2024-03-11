@@ -1,4 +1,4 @@
-package com.mathematical_assistant.util;
+package com.mathematical_assistant.util.validator;
 
 import com.mathematical_assistant.entity.Equation;
 import org.springframework.stereotype.Component;

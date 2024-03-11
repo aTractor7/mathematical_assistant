@@ -3,7 +3,7 @@ package com.mathematical_assistant.controller;
 import com.mathematical_assistant.dto.EquationDTO;
 import com.mathematical_assistant.entity.Equation;
 import com.mathematical_assistant.services.EquationService;
-import com.mathematical_assistant.util.EquationValidator;
+import com.mathematical_assistant.util.validator.EquationValidator;
 import jakarta.validation.Valid;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,7 +16,7 @@ import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.stream.Collectors;
 
-import static com.mathematical_assistant.util.ErrorsUtil.generateErrorMessage;
+import static com.mathematical_assistant.util.error.ErrorsUtil.generateErrorMessage;
 
 @RestController
 @RequestMapping("/equations")
