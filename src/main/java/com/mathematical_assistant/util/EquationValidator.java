@@ -10,7 +10,7 @@ import java.util.List;
 @Component
 public class EquationValidator implements Validator {
 
-    private final List<Character> allowedChars = List.of(' ', '(', ')', '.', '!', '+', '-', '*', '/', 'x', '=',
+    private final List<Character> allowedChars = List.of(' ', '(', ')', '.', '+', '-', '*', '/', 'x', '=',
             '^', '0', '1', '2', '3', '4', '5', '6', '7', '8', '9');
 
     @Override
@@ -69,7 +69,7 @@ public class EquationValidator implements Validator {
     private boolean detectConsecutiveSigns(String polynomial) {
         for(int i = 0; i < polynomial.length() - 1; i++) {
             if((polynomial.charAt(i) == '+' || polynomial.charAt(i) == '-')
-                    && (polynomial.charAt(i + 1) == '*' || polynomial.charAt(i + 1) == '/')) {
+                    && (polynomial.charAt(i + 1) == '*' || polynomial.charAt(i + 1) == '/' || polynomial.charAt(i + 1) == '^')) {
                 return true;
             }
         }
