@@ -1,6 +1,5 @@
 package com.mathematical_assistant.services;
 
-import com.mathematical_assistant.dto.EquationDTO;
 import com.mathematical_assistant.entity.Equation;
 import com.mathematical_assistant.repositiries.EquationRepository;
 import org.springframework.beans.factory.annotation.Autowired;
