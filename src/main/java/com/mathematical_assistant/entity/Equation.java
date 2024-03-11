@@ -21,9 +21,6 @@ public class Equation {
     @Column(name = "polynomial")
     private String polynomial;
 
-    @Column(name = "power")
-    private int power;
-
     @Column(name = "roots")
     private String roots;
 }

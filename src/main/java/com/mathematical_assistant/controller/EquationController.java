@@ -38,6 +38,16 @@ public class EquationController {
         return equationService.getAll().stream().map(this::convertToEquationDTO).collect(Collectors.toList());
     }
 
+    @GetMapping("/getByRoot")
+    public List<EquationDTO> getAll(@RequestParam(name = "root") String root) {
+        return equationService.getByRoot(root).stream().map(this::convertToEquationDTO).collect(Collectors.toList());
+    }
+
+    @GetMapping("/getByPower")
+    public List<EquationDTO> getAll(@RequestParam(name = "power") int power) {
+        return equationService.getByPower(power).stream().map(this::convertToEquationDTO).collect(Collectors.toList());
+    }
+
     @GetMapping("/{id}")
     public EquationDTO getOne(@PathVariable int id) {
         return convertToEquationDTO(equationService.getOne(id));
