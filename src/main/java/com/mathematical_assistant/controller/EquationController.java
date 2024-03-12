@@ -13,6 +13,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 import java.util.NoSuchElementException;
 import java.util.stream.Collectors;
 
@@ -39,13 +40,17 @@ public class EquationController {
     }
 
     @GetMapping("/getByRoot")
-    public List<EquationDTO> getAll(@RequestParam(name = "root") String root) {
-        return equationService.getByRoot(root).stream().map(this::convertToEquationDTO).collect(Collectors.toList());
+    public List<EquationDTO> getAllByRoot(@RequestBody Map<String, String> jsonRoot) {
+        return equationService.getByRoot(jsonRoot.get("root")).stream()
+                .map(this::convertToEquationDTO)
+                .collect(Collectors.toList());
     }
 
     @GetMapping("/getByPower")
-    public List<EquationDTO> getAll(@RequestParam(name = "power") int power) {
-        return equationService.getByPower(power).stream().map(this::convertToEquationDTO).collect(Collectors.toList());
+    public List<EquationDTO> getAllByPower(@RequestBody Map<String, Integer> jsonPower) {
+        return equationService.getByPower(jsonPower.get("power")).stream()
+                .map(this::convertToEquationDTO)
+                .collect(Collectors.toList());
     }
 
     @GetMapping("/{id}")
